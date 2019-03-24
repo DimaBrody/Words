@@ -9,7 +9,7 @@ This is quite straightforward MVVM app where you can store words with any descri
 
 ### Libraries
 There is a list of used libraries: 
-- Room Database
+- Room Database 
 - Navigation
 - Lifecycle
 - Kotlin Coroutines
