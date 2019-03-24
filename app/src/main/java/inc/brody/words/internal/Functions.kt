@@ -1,11 +1,16 @@
 package inc.brody.words.internal
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
 import android.content.Context
 import android.net.ConnectivityManager
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.View
+import android.view.animation.AnimationUtils
 import android.widget.Button
 import android.widget.EditText
+import inc.brody.words.R
 
 fun coordinateButtonWithInputs(btn: Button, vararg edits: EditText) {
     val watcher = object : TextWatcher {
@@ -27,4 +32,40 @@ fun isOnline(ctx: Context): Boolean {
     val networkInfo = connectivityManager.activeNetworkInfo
     return networkInfo != null && networkInfo.isConnected
 }
+
+fun View.setFadeInAnimation(){
+    visibility = View.GONE
+    alpha = 0f
+    animate()
+        .setDuration(150)
+        .setListener(object : AnimatorListenerAdapter(){
+            override fun onAnimationEnd(animation: Animator?) {
+                visibility = View.VISIBLE
+                super.onAnimationEnd(animation)
+            }
+        })
+        .setStartDelay(100)
+        .alpha(1f)
+}
+
+
+fun View.setFadeOutAnimation(){
+    visibility = View.VISIBLE
+    alpha = 1f
+    animate()
+        .setDuration(150)
+        .setListener(object : AnimatorListenerAdapter(){
+            override fun onAnimationEnd(animation: Animator?) {
+                visibility = View.GONE
+                super.onAnimationEnd(animation)
+            }
+        })
+        .alpha(0f)
+}
+
+fun setFadeInAnimationForViews(vararg views: View)
+        = views.forEach { it.setFadeInAnimation() }
+
+fun setFadeOutAnimationForViews(vararg views: View)
+        = views.forEach { it.setFadeOutAnimation() }
 

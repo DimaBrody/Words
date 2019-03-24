@@ -73,7 +73,8 @@ dependencies {
 
     //Androidx material design
     implementation "com.google.android.material:material:1.0.0"
-    implementation 'com.balysv:material-ripple:1.0.2'   
+    implementation 'com.balysv:material-ripple:1.0.2'
+    implementation 'com.shawnlin:number-picker:2.4.8'
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.1.2-alpha02'

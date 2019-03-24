@@ -36,11 +36,3 @@ fun WriteBatch.commitWords(onSuccess: () -> Unit) =
             onSuccess()
         }
     }
-
-fun Fragment.initSettings(){
-    val fragment = SettingsFragment()
-    val transaction = fragmentManager?.beginTransaction()
-    transaction?.replace(R.id.nav_host_fragment, fragment)
-    transaction?.addToBackStack("bs")
-    transaction?.commit()
-}

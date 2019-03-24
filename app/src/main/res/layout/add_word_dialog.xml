@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:app="http://schemas.android.com/apk/res-auto"
-              android:layout_width="match_parent"
+              xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:orientation="vertical">
 
@@ -27,14 +27,13 @@
                     android:text="Dima Brody"
                     android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
                     android:textColor="#263238"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"/>
 
             <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/spacing_small"
                     android:gravity="center_vertical">
-
 
 
             </LinearLayout>
@@ -53,72 +52,129 @@
                 android:minWidth="0dp"
                 android:paddingLeft="@dimen/spacing_large"
                 android:paddingRight="@dimen/spacing_large"
-                android:text="POST" />
+                android:text="POST"/>
 
     </LinearLayout>
 
-    <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:orientation="vertical"
-            android:layout_weight="1">
+    <LinearLayout android:layout_width="match_parent"
+                  android:layout_weight="1"
+                  android:orientation="vertical"
+                  android:layout_height="0dp">
 
-        <View style="@style/DialogUnderline"/>
+        <RelativeLayout android:layout_width="match_parent"
+                        android:id="@+id/relative_edit"
+                        android:layout_height="match_parent">
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical" tools:ignore="UselessParent">
 
-        <EditText android:layout_width="match_parent"
-                  android:background="@android:color/transparent"
-                  android:id="@+id/et_word"
-                  android:hint="Write word..."
-                  android:inputType="textCapSentences"
-                  android:padding="@dimen/spacing_large"
-                  android:textSize="14sp"
-                  android:layout_height="?android:attr/actionBarSize"/>
+                <View style="@style/DialogUnderline"/>
 
-        <View style="@style/DialogUnderline"/>
+                <EditText android:layout_width="match_parent"
+                          android:background="@android:color/transparent"
+                          android:id="@+id/et_word"
+                          android:hint="Write word..."
+                          android:inputType="textCapSentences"
+                          android:padding="@dimen/spacing_large"
+                          android:textSize="14sp"
+                          android:layout_height="?android:attr/actionBarSize"/>
 
-        <EditText
-                android:id="@+id/et_desc"
-                android:gravity="top"
-                android:layout_width="match_parent"
-                android:inputType="textCapSentences"
-                android:layout_height="match_parent"
-                android:background="@android:color/transparent"
-                android:hint="Write description ..."
-                android:padding="@dimen/spacing_large"
-                android:textSize="14sp" />
+                <View style="@style/DialogUnderline"/>
+
+                <EditText
+                        android:id="@+id/et_desc"
+                        android:gravity="top"
+                        android:layout_width="match_parent"
+                        android:inputType="textCapSentences"
+                        android:layout_height="match_parent"
+                        android:background="@android:color/transparent"
+                        android:hint="Write description ..."
+                        android:padding="@dimen/spacing_large"
+                        android:textSize="14sp"/>
+
+            </LinearLayout>
+
+
+        </RelativeLayout>
+
+        <LinearLayout android:layout_width="match_parent"
+                      android:id="@+id/relative_picker"
+                      android:gravity="center"
+                      android:orientation="vertical"
+                      android:layout_height="match_parent">
+
+            <TextView android:layout_width="wrap_content"
+                      android:gravity="center_horizontal"
+                      android:layout_marginTop="10dp"
+                      android:textSize="14sp"
+                      android:text="Amount of words"
+                      android:layout_height="wrap_content"/>
+
+            <com.shawnlin.numberpicker.NumberPicker android:layout_width="wrap_content"
+                                                    android:layout_marginTop="15dp"
+                                                    android:id="@+id/number_picker"
+                                                    app:np_width="64dp"
+                                                    app:np_height="180dp"
+                                                    app:np_dividerColor="@android:color/black"
+                                                    app:np_textColor="@android:color/black"
+                                                    app:np_value="3"
+                                                    android:layout_height="wrap_content"/>
+        </LinearLayout>
 
     </LinearLayout>
+
 
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="?android:attr/actionBarSize"
-            android:background="#f2f2f2"
+            android:background="@android:color/white"
             android:orientation="horizontal">
 
-        <ImageButton
+        <!--<ImageButton
                 android:id="@+id/bt_photo"
                 style="@style/DialogBottomButton"
-                app:srcCompat="@drawable/ic_photo_camera" />
+                app:srcCompat="@drawable/ic_photo_camera"/>
 
         <ImageButton
                 android:id="@+id/bt_link"
                 style="@style/DialogBottomButton"
-                app:srcCompat="@drawable/ic_insert_link" />
+                app:srcCompat="@drawable/ic_insert_link"/>
 
         <ImageButton
                 android:id="@+id/bt_file"
                 style="@style/DialogBottomButton"
-                app:srcCompat="@drawable/ic_description" />
+                app:srcCompat="@drawable/ic_description"/>-->
 
         <View
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:layout_weight="1"/>
 
-        <ImageButton
-                android:id="@+id/bt_setting"
-                style="@style/DialogBottomButton"
-                app:srcCompat="@drawable/ic_more_vert" />
+        <TextView android:layout_width="wrap_content"
+                  android:id="@+id/text_random"
+                  android:textSize="14sp"
+                  android:text="Random words"
+                  android:textColor="@color/grey_40"
+                  android:gravity="center"
+                  android:padding="10dp"
+                  android:layout_height="?android:attr/actionBarSize"/>
+
+        <RelativeLayout android:layout_width="?android:attr/actionBarSize"
+                        android:layout_height="?android:attr/actionBarSize">
+
+            <ImageButton
+                    android:id="@+id/bt_create"
+                    style="@style/DialogBottomButton"
+                    app:srcCompat="@drawable/ic_random"/>
+
+            <ImageButton
+                    android:id="@+id/bt_cancel"
+                    style="@style/DialogBottomButton"
+                    android:visibility="gone"
+                    app:srcCompat="@drawable/ic_close"/>
+
+        </RelativeLayout>
 
     </LinearLayout>
 

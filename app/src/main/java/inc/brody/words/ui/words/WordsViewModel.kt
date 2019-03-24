@@ -1,6 +1,7 @@
 package inc.brody.words.ui.words
 
 import androidx.lifecycle.ViewModel
+import com.google.firebase.firestore.WriteBatch
 import inc.brody.words.data.db.entity.WordEntry
 import inc.brody.words.data.providers.PreferenceProvider
 import inc.brody.words.data.repository.DatabaseRepository
@@ -27,21 +28,41 @@ class WordsViewModel(
 
     }
 
-    fun deleteWord(word: WordEntry) {
+    fun deleteWords(
+        word: WordEntry? = null,
+        words: List<WordEntry>? = null
+    ) {
         if (prefsProvider.isParticularSyncNeeded) {
-            FirebaseUtil.deleteCurrentWord(word) {
-                if (!it.isSuccessful)
-                    prefsProvider.setSyncConditions {
-                        deleteScopedWord(word.copy(isAlive = false), false)
+            if (word != null) {
+                FirebaseUtil.deleteCurrentWord(word) {
+                    if (!it.isSuccessful)
+                        prefsProvider.setSyncConditions {
+                            deleteScopedWord(word.copy(isAlive = false), false)
+                        }
+                    else
+                        deleteScopedWord(word)
+                }
+            } else if (words != null) {
+                val batch = FirebaseUtil.firestore.batch()
+                words.forEach {
+                    batch.deleteWord(it.word)
+                }
+                batch.commitWords {
+                    words.forEach {
+                        deleteScopedWord(it.copy(isAlive = false), false)
                     }
-                else
-                    deleteScopedWord(word)
+                }
             }
         } else prefsProvider.setSyncConditions {
-            deleteScopedWord(word.copy(isAlive = false), false)
+            word?.let {
+                deleteScopedWord(word.copy(isAlive = false), false)
+            }
+            words?.forEach {
+                deleteScopedWord(it.copy(isAlive = false), false)
+            }
+
         }
     }
-
 
     fun commitSynchronizationAsync(words: List<WordEntry>?) = GlobalScope.async {
         if (prefsProvider.isFullSyncNeeded) {
@@ -69,8 +90,22 @@ class WordsViewModel(
         } else words
     }
 
+    fun addListOfWords(words: List<WordEntry>, isFirestoreNeeded: Boolean = false) = GlobalScope.launch {
+        if (isFirestoreNeeded) {
+            val batch = FirebaseUtil.firestore.batch()
 
-    fun addListOfWords(words: List<WordEntry>) = GlobalScope.launch {
+            words.forEach { batch.setWord(it) }
+
+            batch.commitWords {
+                addScopedListOfWords(words)
+                prefsProvider.isSyncNeeded = true
+            }
+        } else
+            databaseRepository.addListOfWords(words)
+
+    }
+
+    private fun addScopedListOfWords(words: List<WordEntry>) = GlobalScope.launch {
         databaseRepository.addListOfWords(words)
     }
 
